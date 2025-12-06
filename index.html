@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psicologia & Terapia Online | Mente & Equilíbrio</title>
+    
+    <!-- Fontes: Manrope (Modernidade/Leitura) e Cormorant Garamond (Elegância/Títulos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIÁVEIS DE DESIGN --- */
+        :root {
+            --bg-cream: #FFF2F5; 
+            --bg-white: #FFFFFF;
+            --primary-rose: #C47F8B;
+            --primary-dark: #8F5560;
+            --accent-peach: #E3BBA3;
+            --text-dark: #4A3E40;
+            --text-muted: #857174;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+            --radius-lg: 32px;
+            --radius-pill: 100px;
+            --font-sans: 'Manrope', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+        }
+
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(227, 187, 163, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(196, 127, 139, 0.2) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s ease; }
+        img { max-width: 100%; width: 100%; height: auto; display: block; object-fit: cover; }
+        ul { list-style: none; }
+
+        /* --- UTILITÁRIOS --- */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .section-padding { padding: 100px 0; }
+        
+        h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; line-height: 1.2; }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem); /* Responsivo: min 2rem, ideal 4vw, max 3rem */
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-dark), var(--primary-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 0 10px;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-rose);
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+            margin-bottom: 16px;
+            font-weight: 600;
+            border: 1px solid rgba(196, 127, 139, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        /* --- BOTÕES --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap; /* Evita que o texto do botão quebre */
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-rose), #D69EA7);
+            color: white;
+            box-shadow: 0 10px 25px rgba(196, 127, 139, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(196, 127, 139, 0.45); }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--primary-rose);
+            border: 1px solid var(--primary-rose);
+        }
+        .btn-glass:hover { background: white; color: var(--primary-dark); transform: translateY(-2px); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            width: 95%; max-width: 1200px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            border-radius: var(--radius-pill);
+            padding: 12px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-dark); white-space: nowrap; }
+        .logo span { color: var(--primary-rose); font-style: italic; }
+
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-dark); }
+        .nav-links a:hover { color: var(--primary-rose); }
+        
+        .header-cta { display: flex; gap: 10px; align-items: center; }
+        .mobile-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--primary-rose); margin-left: 15px; }
+
+        /* --- HERO --- */
+        .hero { padding-top: 160px; padding-bottom: 80px; text-align: center; }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin: 24px 0;
+            color: var(--text-dark);
+            line-height: 1.1;
+        }
+        .hero h1 span { font-style: italic; color: var(--primary-rose); }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 32px;
+            padding: 0 15px;
+        }
+
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap; /* Permite quebrar linha em telas pequenas */
+            margin-bottom: 40px;
+        }
+        
+        .hero-tags span {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            background: rgba(196, 127, 139, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(196, 127, 139, 0.2);
+            white-space: nowrap;
+        }
+
+        .hero-btns {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+        }
+
+        .hero-img-container {
+            margin-top: 60px;
+            position: relative;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 40px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 20px 60px rgba(196, 127, 139, 0.15);
+        }
+        .hero-img-inner { border-radius: 30px; overflow: hidden; }
+
+        /* --- BENTO GRID --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .bento-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            display: flex; flex-direction: column; justify-content: space-between;
+            border: 1px solid rgba(196, 127, 139, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            min-height: 280px; /* Altura mínima para garantir consistência */
+        }
+
+        .bento-card:hover { transform: translateY(-5px); border-color: var(--primary-rose); }
+
+        /* Colunas Padrão (Desktop) */
+        .col-span-12 { grid-column: span 12; }
+        .col-span-7 { grid-column: span 7; }
+        .col-span-5 { grid-column: span 5; }
+        .col-span-4 { grid-column: span 4; }
+
+        /* .bento-icon class removed as icons are removed */
+        
+        .bento-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--text-dark); }
+        .bento-card p { color: var(--text-muted); font-size: 1rem; }
+
+        /* Card Visual */
+        .card-visual { padding: 0; min-height: 300px; }
+        .card-visual img { width: 100%; height: 100%; object-fit: cover; }
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(74, 62, 64, 0.9), transparent);
+            color: white;
+        }
+        .card-overlay h3 { color: white; margin-bottom: 5px; }
+        .card-overlay p { color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+
+        /* --- ESPECIALIDADES --- */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsivo automático */
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .spec-item {
+            background: white; padding: 24px; border-radius: 20px;
+            display: flex; align-items: center; gap: 15px;
+            border: 1px solid transparent; transition: 0.3s;
+        }
+        .spec-item:hover { border-color: var(--accent-peach); box-shadow: 0 10px 20px rgba(227, 187, 163, 0.2); }
+        .spec-dot { width: 10px; height: 10px; background: var(--primary-rose); border-radius: 50%; flex-shrink: 0; }
+
+        /* --- PROVA SOCIAL --- */
+        .testimonial-box {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: clamp(40px, 8vw, 80px); /* Padding dinâmico */
+            text-align: center;
+            border: 1px solid rgba(196, 127, 139, 0.15);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .quote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-style: italic; color: var(--primary-dark);
+            margin-bottom: 30px;
+        }
+
+        /* --- OFERTA FINAL --- */
+        .final-offer { padding: 100px 0; position: relative; }
+        .final-offer-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://voxoestudio.com.br/wp-content/uploads/2025/11/representacao-processo-e-conceito-da-mente-coletiva-no-estilo-de-arte-digital-scaled.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.15; mix-blend-mode: multiply; z-index: -1;
+        }
+        .offer-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 2px solid white;
+            border-radius: 40px;
+            padding: 60px 30px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 30px 80px rgba(196, 127, 139, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: white; padding: 60px 0 30px; text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .footer-links { display: flex; justify-content: center; gap: 24px; margin: 30px 0; flex-wrap: wrap; }
+
+        /* --- MEDIA QUERIES (RESPONSIVIDADE AVANÇADA) --- */
+        
+        /* Tablet e Telas Médias (max 1024px) */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; } /* Esconde menu desktop */
+            .mobile-toggle { display: block; } /* Mostra botão mobile */
+            .header-cta .btn { display: none; } /* Esconde botão CTA do header no tablet/mobile pra limpar */
+            
+            /* Ajuste do Bento Grid para Tablet (2 colunas) */
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .col-span-7, .col-span-5 { grid-column: span 2; } /* Ocupa largura total */
+            .col-span-4 { grid-column: span 1; } /* Ocupa metade */
+        }
+
+        /* Mobile (max 768px) */
+        @media (max-width: 768px) {
+            .section-padding { padding: 60px 0; } /* Menos espaço vertical */
+            
+            /* Header */
+            header { width: 100%; top: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.05); }
+            
+            /* Hero */
+            .hero { padding-top: 100px; padding-bottom: 40px; }
+            .hero-img-container { margin-top: 40px; border-radius: 20px; padding: 5px; }
+            .hero-img-inner { border-radius: 15px; }
+            
+            /* Bento Grid vira coluna única (Pilha) */
+            .bento-grid { display: flex; flex-direction: column; gap: 20px; }
+            .bento-card { min-height: auto; } /* Altura automática */
+            .card-visual { height: 250px; } /* Altura fixa para imagem */
+
+            /* Especialidades */
+            .specs-grid { grid-template-columns: 1fr; } /* Uma coluna */
+
+            /* Botões full width no mobile para facilitar toque */
+            .hero-btns .btn, .offer-card .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="logo">Mente<span>&</span>Equilíbrio</a>
+        
+        <nav class="nav-links">
+            <a href="#inicio">Início</a>
+            <a href="#especialidades">Especialidades</a>
+            <a href="#beneficios">Como Funciona</a>
+            <a href="#equipe">Psicólogos</a>
+        </nav>
+
+        <div class="header-cta">
+            <a href="#agendar" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Agendar</a>
+            <div class="mobile-toggle">☰</div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="tag">Atendimento Online Humanizado</div>
+            <h1>Sua saúde mental importa.<br><span>Não enfrente tudo sozinho.</span></h1>
+            <p class="subtitle">Atendimento psicológico online com profissionais qualificados para ajudar você a lidar com ansiedade, insegurança e muito mais.</p>
+
+            <!-- Ícones removidos das tags -->
+            <div class="hero-tags">
+                <span>Sigilo Absoluto</span>
+                <span>Sessões Flexíveis</span>
+                <span>Psicólogos Especializados</span>
+            </div>
+            
+            <div class="hero-btns">
+                <a href="#agendar" class="btn btn-primary">Agendar primeira sessão</a>
+                <a href="#equipe" class="btn btn-glass">Conhecer psicólogos</a>
+            </div>
+
+            <div class="hero-img-container">
+                <div class="hero-img-inner">
+                    <img src="https://voxoestudio.com.br/wp-content/uploads/2025/11/jovem-de-tiro-completo-em-terapia-scaled.jpg" alt="Terapia Online">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFÍCIOS -->
+    <section id="beneficios" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Por que fazer terapia hoje<br>pode mudar sua vida?</h2>
+            
+            <div class="bento-grid">
+                <!-- Card Visual -->
+                <div class="bento-card col-span-7 card-visual">
+                    <img src="https://voxoestudio.com.br/wp-content/uploads/2025/11/reuniao-de-negocios-em-restaurante-scaled.jpg" alt="Relações saudáveis">
+                    <div class="card-overlay">
+                        <h3>Melhora nos Relacionamentos</h3>
+                        <p>Comunique-se com assertividade na vida pessoal e profissional.</p>
+                    </div>
+                </div>
+
+                <!-- Card Texto (Ícone removido) -->
+                <div class="bento-card col-span-5" style="background: var(--bg-cream);">
+                    <div>
+                        <h3>Diminuição da Ansiedade</h3>
+                        <p>Técnicas práticas para acalmar a mente e retomar o controle.</p>
+                    </div>
+                </div>
+
+                <!-- Cards Menores (Ícone removido) -->
+                <div class="bento-card col-span-4">
+                    <div>
+                        <h3>Autoestima</h3>
+                        <p>Fortaleça sua autoimagem.</p>
+                    </div>
+                </div>
+
+                <!-- (Ícone removido) -->
+                <div class="bento-card col-span-4">
+                    <div>
+                        <h3>Evolução Contínua</h3>
+                        <p>Autoconhecimento constante.</p>
+                    </div>
+                </div>
+
+                <!-- Card CTA -->
+                <div class="bento-card col-span-4" style="background: var(--primary-rose); color: white; text-align: center; justify-content: center; align-items: center;">
+                    <h3 style="color: white;">Espaço Seguro</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 20px;">Sem julgamentos.</p>
+                    <a href="#agendar" style="background: white; color: var(--primary-rose); padding: 10px 20px; border-radius: 50px; font-weight: bold; font-size: 0.9rem;">Começar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESPECIALIDADES -->
+    <section id="especialidades" class="section-padding" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Como podemos te ajudar</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 40px;">Protocolos especializados para diversas áreas.</p>
+
+            <div class="specs-grid">
+                <div class="spec-item"><div class="spec-dot"></div><h3>Terapia para ansiedade</h3></div>
+                <div class="spec-item"><div class="spec-dot" style="background: var(--accent-peach);"></div><h3>Terapia para depressão</h3></div>
+                <div class="spec-item"><div class="spec-dot"></div><h3>Autoestima & Confiança</h3></div>
+                <div class="spec-item"><div class="spec-dot" style="background: var(--accent-peach);"></div><h3>Ajustes emocionais</h3></div>
+                <div class="spec-item"><div class="spec-dot"></div><h3>Relacionamentos</h3></div>
+                <div class="spec-item"><div class="spec-dot" style="background: var(--accent-peach);"></div><h3>Autocontrole</h3></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#agendar" class="btn btn-glass">Ver especialidades</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROVA SOCIAL -->
+    <section class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Histórias de transformação</h2>
+            <div class="testimonial-box">
+                <p class="quote">“Depois da terapia, eu finalmente consegui estabilizar minha vida emocional. Foi um divisor de águas.”</p>
+                <p style="font-weight: 700;">— Paciente Anônima</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EQUIPE -->
+    <section id="equipe" class="section-padding" style="background: white;">
+        <div class="container" style="text-align: center; max-width: 800px;">
+            <div class="tag">NOSSOS PROFISSIONAIS</div>
+            <h2 class="section-title">Conheça nossos psicólogos</h2>
+            <p style="margin-bottom: 40px; font-size: 1.1rem; color: var(--text-muted);">
+                Abordagem humanizada, ética e baseada em evidências.
+            </p>
+            <a href="#agendar" class="btn btn-primary">Escolher meu psicólogo</a>
+        </div>
+    </section>
+
+    <!-- OFERTA FINAL -->
+    <section id="agendar" class="final-offer">
+        <div class="final-offer-bg"></div>
+        <div class="container">
+            <div class="offer-card">
+                <h2>Sua primeira sessão pode ser <span style="color: var(--primary-rose); font-style: italic;">hoje.</span></h2>
+                <p style="margin: 20px 0 40px; font-size: 1.2rem; color: var(--text-dark);">
+                    Comece sua jornada emocional com apoio profissional.
+                </p>
+                <a href="#" class="btn btn-primary" style="padding: 20px 40px;">Agendar sessão agora</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <a href="#" class="logo" style="font-size: 1.4rem;">Mente<span>&</span>Equilíbrio</a>
+            
+            <div class="footer-links">
+                <a href="#">Política</a>
+                <a href="#">Termos</a>
+                <a href="#">Contato</a>
+                <a href="#">WhatsApp</a>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                © 2025 desenvolvido por 
+                <a href="https://voxoestudio.com.br" style="color: var(--primary-rose); font-weight: bold;">voxo estúdio</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Mobile Menu Logic
+        const mobileBtn = document.querySelector('.mobile-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileBtn.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '70px';
+                navLinks.style.left = '50%';
+                navLinks.style.transform = 'translateX(-50%)';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '20px';
+                navLinks.style.width = '90%';
+                navLinks.style.borderRadius = '20px';
+                navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                navLinks.style.textAlign = 'center';
+            }
+        });
+    </script>
+</body>
+</html>
